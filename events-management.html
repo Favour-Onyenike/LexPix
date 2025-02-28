@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Events Management - LexPix</title>
+    <base href="https://Favour-Onyenike.github.io/LexPix/">
     <style>
         /* Global Styles */
         body {
@@ -135,7 +136,19 @@
                 left: 0;
                 z-index: 999
             }
-
+            .menu-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+            .menu-overlay.active {
+                display: block;
+            }
             main {
                 margin-left: 0;
                 padding: 10px;
@@ -261,6 +274,31 @@
         .image-preview-item .delete-btn:hover {
             background-color: rgba(255, 0, 0, 1);
         }
+
+        @media (max-width: 768px) {
+        .admin-container {
+            flex-direction: column;
+        }
+
+        .form-container {
+            margin: 10px;
+            padding: 15px;
+        }
+
+        .event-card {
+            margin: 10px;
+        }
+
+        .image-preview-container {
+            gap: 5px;
+        }
+
+        .image-preview-item {
+            width: 80px;
+            height: 80px;
+        }
+    }
+
     </style>
 </head>
 <body>
@@ -279,9 +317,9 @@
                 <h2>LexPix</h2>
             </div>
             <ul>
-                <li><a href="admin.html">Manage Reviews</a></li>
-                <li><a href="gallery-management.html">Manage Gallery</a></li>
-                <li><a href="events-management.html" class="active">Manage Events</a></li>
+                <li><a href="/LexPix/admin.html">Manage Reviews</a></li>
+                <li><a href="/LexPix/gallery-management.html">Manage Gallery</a></li>
+                <li><a href="/LexPix/events-management.html" class="active">Manage Events</a></li>
             </ul>
             <button class="logout-btn">Logout</button>
         </nav>

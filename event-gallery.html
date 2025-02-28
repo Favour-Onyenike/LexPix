@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width">
     <title>Event Gallery - LexPix</title>
+    <base href="https://Favour-Onyenike.github.io/LexPix/">
     <link rel="stylesheet" href="css/admin-styles.css">
+    <link rel="stylesheet" href="/LexPix/css/global.css">
     <style>
         .event-gallery {
             padding: 20px;
@@ -41,6 +43,39 @@
         }
         .download-btn:hover {
             background: rgba(0, 0, 0, 0.9);
+        }
+    </style>
+    <style>
+        @media (max-width: 768px) {
+            .event-gallery {
+                padding: 10px;
+            }
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 10px;
+            }
+            .gallery-item img {
+                height: 180px;
+            }
+            .event-header {
+                margin-bottom: 20px;
+            }
+            .event-header h1 {
+                font-size: 24px;
+            }
+            .download-btn {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+        }
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 8px;
+            }
+            .gallery-item img {
+                height: 150px;
+            }
         }
     </style>
 </head>
