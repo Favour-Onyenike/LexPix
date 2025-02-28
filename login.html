@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - LexPix</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Add this to your existing styles */
+        .login-container {
+            display: flex;
+            min-height: 100vh;
+            background: black;
+            padding-top: 80px; /* Add padding to account for the fixed navbar */
+        }
+
+        .login-content {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .login-left {
+            flex: 1;
+            padding: 60px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-left h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #fbbf24;
+        }
+
+        .login-left p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .login-form-container {
+            flex: 1;
+            background: white;
+            border-radius: 10px; /* Reduced border radius */
+            padding: 20px; /* Reduced padding */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Smaller shadow */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 350px; /* Smaller max-width */
+            margin: 0 auto; /* Center the form */
+        }
+
+        .login-form {
+            max-width: 300px; /* Smaller max-width */
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .login-form h2 {
+            font-size: 1.5rem; /* Smaller font size */
+            color: #333;
+            margin-bottom: 20px; /* Reduced margin */
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px; /* Reduced margin */
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px; /* Reduced margin */
+            color: #666;
+            font-size: 0.9rem; /* Smaller font size */
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px; /* Reduced padding */
+            border: 1px solid #ddd;
+            border-radius: 6px; /* Reduced border radius */
+            font-size: 0.9rem; /* Smaller font size */
+            transition: border-color 0.3s;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 10px; /* Reduced padding */
+            background-color: #fbbf24;
+            color: black;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px; /* Reduced border radius */
+            font-size: 0.9rem; /* Smaller font size */
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: transparent;
+            color: #fbbf24;
+            border: 2px solid #fbbf24;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px; /* Reduced margin */
+            font-size: 0.9rem; /* Smaller font size */
+        }
+
+        .forgot-password {
+            color: #fbbf24;
+            text-decoration: none;
+            font-size: 0.9rem; /* Smaller font size */
+        }
+
+        .social-login {
+            margin-top: 20px; /* Reduced margin */
+            text-align: center;
+        }
+
+        .social-login p {
+            color: #666;
+            margin-bottom: 10px; /* Reduced margin */
+            font-size: 0.9rem; /* Smaller font size */
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Reduced gap */
+        }
+
+        .social-icons a {
+            color: #fbbf24;
+            transition: color 0.3s ease;
+            font-size: 1rem; /* Smaller font size */
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .login-content {
+                flex-direction: column;
+            }
+
+            .login-left {
+                padding: 30px;
+                text-align: center;
+            }
+
+            .login-form-container {
+                border-radius: 10px 10px 0 0; /* Reduced border radius */
+            }
+            .form-group input {
+                width: 85%;
+            }
+        }
+
+        /* Add to existing styles */
+        
+
+        .login-form-container {
+            margin-top: 80px; /* Add space for navbar */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="container nav-container">
+            <div class="logo">
+                <a href="index.html">
+                    <h2>LexPix<span>.</span></h2>
+                </a>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html">About</a></li>
+                <li><a href="index.html">Projects</a></li>
+                <li><a href="index.html">Contact</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="events.html">Events</a></li>
+            </ul>
+    
+            <div class="nav-buttons">
+                <button class="login-button" onclick="location.href='login.html';">Login</button>
+                <button class="hamburger" aria-label="Menu">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Section -->
+    <div class="login-container">
+        <div class="login-content">
+            <div class="login-left">
+                <h1>Hello, welcome!</h1>
+                <p>Enter your details to access the admin dashboard and manage your photography portfolio.</p>
+            </div>
+            <div class="login-form-container">
+                <form class="login-form" id="loginForm">
+                    <h2>Login</h2>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" id="email" placeholder="name@mail.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+                    <div class="remember-forgot">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember">
+                            Remember me
+                        </label>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="login-btn">Login</button>
+                    <div class="social-login">
+                        <p>FOLLOW</p>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h2>LexPix<span>.</span></h2>
+                <p>Capturing moments with minimalist elegance. Professional photography that focuses on what matters most.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <div class="footer-contact">
+                    <a href="mailto:info@lexpix.com">info@lexpix.com</a>
+                    <a href="tel:+18254610429">+1 825 461 0429</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/lexarenpictures" target="_blank" rel="noopener noreferrer">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.058-1.69-.072-4.949-.072zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                        </svg>
+                        <span>Instagram</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 LexPix. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Login Functionality -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const loginForm = document.getElementById("loginForm");
+
+            if (loginForm) {
+                loginForm.addEventListener("submit", function (event) {
+                    event.preventDefault(); // Prevent form submission
+
+                    // Get input values
+                    const email = document.getElementById("email").value;
+                    const password = document.getElementById("password").value;
+
+                    // Valid credentials
+                    const validEmails = ["onyenikefavour8@gmail.com", "lexarenlogistics@gmail.com"];
+                    const validPassword = "abcd1234";
+
+                    // Check if email and password are valid
+                    if (validEmails.includes(email) && password === validPassword) {
+                        // Redirect to events.html on successful login
+                        window.location.href = "admin.html";
+                    } else {
+                        // Show error message for invalid credentials
+                        alert("Invalid email or password. Please try again.");
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

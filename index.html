@@ -2,13 +2,102 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, ">
+    <title>LexPix Photography</title>
+    <!-- Fix CSS file paths -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="./style.css">
     
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="/css/mobile.css">
-    <link rel="stylesheet" href="/LexPix/css/global.css">
+    <style>
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
 
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            background-position: center;
+            background-size: cover;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-grid {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-wrap: wrap;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .gallery-item {
+            -webkit-box-flex: 1;
+            -ms-flex: 1 1 300px;
+            flex: 1 1 300px;
+            min-width: 300px;
+            position: relative;
+            overflow: hidden;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            -o-object-fit: cover;
+            object-fit: cover;
+            -webkit-transition: transform 0.3s ease;
+            -moz-transition: transform 0.3s ease;
+            -o-transition: transform 0.3s ease;
+            transition: transform 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                gap: 10px;
+            }
+            
+            .gallery-item {
+                -ms-flex: 1 1 250px;
+                flex: 1 1 250px;
+                min-width: 250px;
+            }
+            
+            .gallery-item img {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-item {
+                -ms-flex: 1 1 200px;
+                flex: 1 1 200px;
+                min-width: 200px;
+            }
+            
+            .gallery-item img {
+                height: 200px;
+            }
+        }
+    </style>
 </head>
 <body>
   <div class="min-h-screen flex flex-col">
@@ -32,12 +121,12 @@
             </ul>
     
             <div class="nav-buttons">
-                <button class="login-button">Login</button>
-                <button class="hamburger" aria-label="Menu">
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                </button>
+              <button class="login-button" onclick="location.href='login.html';">Login</button>
+              <button class="hamburger" aria-label="Toggle Menu">
+                <div></div>
+                <div></div>
+                <div></div>
+              </button>
             </div>
         </div>
     </nav>
@@ -230,8 +319,9 @@
               </div>
               <div class="social-links">
                 <a href="https://www.instagram.com/lexarenpictures?igsh=MWoyZDg2dXQxOGp6cQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">
+                  <!-- Replace the existing Instagram SVG with this one -->
                   <svg fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0-3.205-.012 3.584-.069 4.849-.149 3.26-.149-4.771-1.691-4.919-4.919-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162S8.597 18.163 12 18.163s6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zM12 16c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0-3.205-.012 3.584-.069 4.849-.149 3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
                   </svg>
                   <span>Instagram</span>
                 </a>
@@ -333,20 +423,23 @@
       <!-- Footer Section -->
    
   
-  <!-- Mobile Menu -->
-  <div class="mobile-menu">
-    <button class="close-menu">&times;</button>
-    <ul class="nav-links">
-      <li><a href="#hero">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="gallery.html">Gallery</a></li>
-      <li><a href="events.html">Events</a></li>
-    </ul>
-    <button class="login-button">Login</button>
-  </div>
+ <!-- Hamburger Button -->
+
+
+<!-- Mobile Menu -->
+<div class="mobile-menu">
+  <button class="close-menu">&times;</button>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html">About</a></li>
+    <li><a href="index.html">Services</a></li>
+    <li><a href="index.html">Projects</a></li>
+    <li><a href="index.html">Contact</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="events.html">Events</a></li>
+  </ul>
+  <button class="login-button" onclick="location.href='login.html';">Login</button>
+</div>
   
   <script src="script.js"></script>
 </body>
