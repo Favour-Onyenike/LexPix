@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Events Management - LexPix</title>
-    <base href="https://Favour-Onyenike.github.io/LexPix/">
+    
     <style>
         /* Global Styles */
         body {
@@ -317,9 +317,9 @@
                 <h2>LexPix</h2>
             </div>
             <ul>
-                <li><a href="/LexPix/admin.html">Manage Reviews</a></li>
-                <li><a href="/LexPix/gallery-management.html">Manage Gallery</a></li>
-                <li><a href="/LexPix/events-management.html" class="active">Manage Events</a></li>
+                <li><a href="admin.html">Manage Reviews</a></li>
+                <li><a href="gallery-management.html">Manage Gallery</a></li>
+                <li><a href="events-management.html" class="active">Manage Events</a></li>
             </ul>
             <button class="logout-btn">Logout</button>
         </nav>
@@ -507,6 +507,17 @@
     }
     // Initial display
     displayEvents();
+
+    document.addEventListener("DOMContentLoaded", function () {
+    // Logout button functionality
+    const logoutButton = document.querySelector(".logout-btn");
+    if (logoutButton) {
+        logoutButton.addEventListener("click", function () {
+            // Redirect to index.html
+            window.location.href = "index.html";
+        });
+    }
+});
 </script>
 
 </body>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - LexPix</title>
     <link rel="stylesheet" href="css/admin-styles.css">
-    <link rel="stylesheet" href="/LexPix/css/global.css">
+    
 </head>
 <body>
     <div class="menu-overlay"></div>
@@ -22,9 +22,9 @@
                 <h2>LexPix<span>.</span></h2>
             </div>
             <ul>
-                <li><a href="admin.html" class="active">Manage Reviews</a></li>
+                <li><a href="admin.html"class="active">Manage Reviews</a></li>
                 <li><a href="gallery-management.html">Manage Gallery</a></li>
-                <li><a href="events-management.html">Manage Events</a></li>
+                <li><a href="events-management.html" >Manage Events</a></li>
             </ul>
             <button class="logout-btn">Logout</button>
         </nav>
@@ -112,23 +112,34 @@
         }
 
         function toggleSideMenu() {
-    const sideMenu = document.getElementById('sideMenu');
-    const overlay = document.querySelector('.menu-overlay');
-    sideMenu.classList.toggle('active');
-    if (overlay) {
-        overlay.classList.toggle('active');
-    }
-}
+            const sideMenu = document.getElementById('sideMenu');
+            const overlay = document.querySelector('.menu-overlay');
+            sideMenu.classList.toggle('active');
+            if (overlay) {
+                overlay.classList.toggle('active');
+            }
+        }
 
-// Close menu when clicking outside
-document.addEventListener('click', function(e) {
-    const sideMenu = document.getElementById('sideMenu');
-    const hamburger = document.querySelector('.menu-toggle');
-    if (!sideMenu.contains(e.target) && !hamburger.contains(e.target) && sideMenu.classList.contains('active')) {
-        sideMenu.classList.remove('active');
-        document.querySelector('.menu-overlay').classList.remove('active');
-    }
-});
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const sideMenu = document.getElementById('sideMenu');
+            const hamburger = document.querySelector('.menu-toggle');
+            if (!sideMenu.contains(e.target) && !hamburger.contains(e.target) && sideMenu.classList.contains('active')) {
+                sideMenu.classList.remove('active');
+                document.querySelector('.menu-overlay').classList.remove('active');
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Logout button functionality
+            const logoutButton = document.querySelector(".logout-btn");
+            if (logoutButton) {
+                logoutButton.addEventListener("click", function () {
+                    // Redirect to index.html
+                    window.location.href = "index.html";
+                });
+            }
+        });
     </script>
 </body>
 </html>

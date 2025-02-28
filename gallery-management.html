@@ -2,220 +2,308 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gallery Management - LexPix</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" href="/css/admin-styles.css">
+    
     <style>
-        /* Gallery Management Specific Styles */
-/* Admin Layout */
-.admin-container {
-    display: flex;
-    min-height: 100vh;
-    background-color: #f3f4f6;
-}
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+        }
 
-/* Side Menu */
-.side-menu {
-    width: 250px;
-    background-color: #1f2937;
-    padding: 24px 0;
-    position: fixed;
-    height: 100vh;
-    transition: transform 0.3s ease;
-}
+        /* Admin Container */
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
 
-.side-menu .logo {
-    padding: 0 24px;
-    margin-bottom: 32px;
-}
+        /* Side Menu */
+        .side-menu {
+            width: 250px;
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
 
-.side-menu .logo h2 {
-    color: white;
-    font-size: 24px;
-    margin: 0;
-}
+        .side-menu .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-.side-menu .logo span {
-    color: #fbbf24;
-}
+        .side-menu .logo h2 {
+            font-size: 24px;
+            margin: 0;
+        }
 
-.side-menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
+        .side-menu .logo span {
+            color: #3498db;
+        }
 
-.side-menu ul li a {
-    display: block;
-    padding: 12px 24px;
-    color: #9ca3af;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
+        .side-menu ul {
+            list-style: none;
+            padding: 0;
+        }
 
-.side-menu ul li a:hover,
-.side-menu ul li a.active {
-    background-color: #374151;
-    color: #fbbf24;
-}
+        .side-menu ul li {
+            margin: 15px 0;
+        }
 
-.logout-btn {
-    position: absolute;
-    bottom: 24px;
-    left: 24px;
-    right: 24px;
-    padding: 12px;
-    background-color: #dc2626;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+        .side-menu ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
 
-.logout-btn:hover {
-    background-color: #b91c1c;
-}
+        .side-menu ul li a:hover,
+        .side-menu ul li a.active {
+            background-color: #34495e;
+            color: #3498db;
+        }
 
-/* Main Content */
-main {
-    flex: 1;
-    margin-left: 250px;
-    padding: 32px;
-}
+        .side-menu .logout-btn {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+        }
 
-main h2 {
-    margin-top: 0;
-    margin-bottom: 24px;
-    color: #1f2937;
-}
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 30px; /* Increased right padding */
+            background-color: #2c3e50;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .mobile-nav {
+         display: none; /* Default state is hidden */
+        }
+        .mobile-nav .mobile-logo {
+            font-size: 20px;
+        }
+        .menu-toggle {
+            margin-right: 40px; /* Added margin to the right */
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        /* Mobile Side Menu Hidden */
+        @media (max-width: 768px) {
+            .side-menu {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                height: 100vh;
+                z-index: 1000;
+                width: 250px;
+                transition: all 0.3s ease;
+                visibility: hidden;
+            }
 
-/* Form Styles */
-.form-container {
-    background-color: white;
-    padding: 24px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    margin-bottom: 32px;
-}
+            .side-menu.active {
+                left: 0;
+                visibility: visible; 
+                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2)
+            }
 
-.section-header {
-    margin-bottom: 24px;
-}
+            .mobile-nav {
+                display: flex;
+                width: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 999
+            }
+            .menu-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+            .menu-overlay.active {
+                display: block;
+            }
+            main {
+                margin-left: 0;
+                padding: 10px;
+                width: 100%;
+                margin-top: 60px; /* Space for mobile nav */
+            }
+        }
 
-.form-group {
-    margin-bottom: 20px;
-}
+        /* Content */
+        main {
+            flex-grow: 1;
+            padding: 20px;
+        }
 
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #4b5563;
-    font-weight: 500;
-}
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    transition: border-color 0.3s;
-}
+        .form-group {
+            margin-bottom: 15px;
+        }
 
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    border-color: #fbbf24;
-    outline: none;
-}
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
 
-.submit-btn {
-    background-color: #fbbf24;
-    color: black;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 95%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
 
-.submit-btn:hover {
-    background-color: #f59e0b;
-    transform: translateY(-2px);
-}
+        .submit-btn {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
-/* Mobile Navigation */
-.mobile-nav {
-    display: none;
-    background-color: #1f2937;
-    padding: 16px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-}
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
 
-.mobile-logo {
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-}
+        .gallery-list {
+            margin-top: 30px;
+        }
 
-.menu-toggle {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-}
+        .gallery-item {
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
 
-.menu-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-}
+        .actions button {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
 
-.menu-overlay.active {
-    display: block;
-}
+        .actions button:hover {
+            background-color: #c0392b;
+        }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .mobile-nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+        /* Image Preview */
+        .image-preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
 
-    .side-menu {
-        transform: translateX(-100%);
-        z-index: 1000;
-    }
+        .image-preview-item {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            overflow: hidden;
+        }
 
-    .side-menu.active {
-        transform: translateX(0);
-    }
+        .image-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-    main {
-        margin-left: 0;
-        padding-top: 80px;
-        padding-top: 40px;
-        
-    }
-}
+        .image-preview-item .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(255, 0, 0, 0.7);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .image-preview-item .delete-btn:hover {
+            background-color: rgba(255, 0, 0, 1);
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                flex-direction: column;
+            }
+
+            .form-container {
+                margin: 10px;
+                padding: 15px;
+            }
+
+            .gallery-item {
+                margin: 10px;
+            }
+
+            .image-preview-container {
+                gap: 5px;
+            }
+
+            .image-preview-item {
+                width: 80px;
+                height: 80px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="menu-overlay"></div>
+
     <!-- Mobile Navigation -->
     <div class="mobile-nav">
         <div class="mobile-logo">LexPix</div>
@@ -226,12 +314,12 @@ main h2 {
         <!-- Side Menu -->
         <nav class="side-menu" id="sideMenu">
             <div class="logo">
-                <h2>LexPix<span>.</span></h2>
+                <h2>LexPix</h2>
             </div>
             <ul>
                 <li><a href="admin.html">Manage Reviews</a></li>
-                <li><a href="gallery-management.html" class="active">Manage Gallery</a></li>
-                <li><a href="events-management.html">Manage Events</a></li>
+                <li><a href="gallery-management.html"class="active">Manage Gallery</a></li>
+                <li><a href="events-management.html" >Manage Events</a></li>
             </ul>
             <button class="logout-btn">Logout</button>
         </nav>
@@ -239,8 +327,10 @@ main h2 {
         <!-- Main Content -->
         <main>
             <h2>Gallery Management</h2>
+
+            <!-- Add Gallery Form -->
             <div class="form-container">
-                <form class="gallery-form" id="galleryForm">
+                <form class="add-gallery-form" id="galleryForm">
                     <div class="section-header">
                         <h2>Add New Images</h2>
                     </div>
@@ -261,151 +351,153 @@ main h2 {
                     <button type="submit" class="submit-btn">Add Images</button>
                 </form>
             </div>
-            
+
             <!-- Gallery List -->
             <div class="gallery-list">
                 <h2>Current Images</h2>
-                <div class="gallery-grid" id="galleryContainer">
+                <div id="galleryContainer">
                     <!-- Gallery items will be loaded here dynamically -->
                 </div>
             </div>
         </main>
     </div>
 
+    <!-- JavaScript -->
     <script>
         // Function to handle image preview
         const imageFileInput = document.getElementById('imageFile');
         const imagePreviewContainer = document.getElementById('imagePreview');
         let selectedFiles = [];
-    
+
         imageFileInput.addEventListener('change', function(e) {
             const files = Array.from(e.target.files);
             imagePreviewContainer.innerHTML = '';
             selectedFiles = [];
-            
+
             files.forEach(file => {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const previewItem = document.createElement('div');
                     previewItem.className = 'image-preview-item';
-                    
+
                     const img = document.createElement('img');
                     img.src = e.target.result;
-                    
+
                     const deleteBtn = document.createElement('button');
                     deleteBtn.className = 'delete-btn';
                     deleteBtn.innerHTML = '×';
                     deleteBtn.onclick = function() {
                         selectedFiles = selectedFiles.filter(f => f !== file);
                         previewItem.remove();
-                        
+
                         if (selectedFiles.length === 0) {
                             imageFileInput.value = '';
                         }
                     };
-                    
+
                     previewItem.appendChild(img);
                     previewItem.appendChild(deleteBtn);
                     imagePreviewContainer.appendChild(previewItem);
-                    
+
                     selectedFiles.push(file);
                 };
                 reader.readAsDataURL(file);
             });
         });
-    
+
         // Function to add new image to gallery
         document.getElementById('galleryForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const title = document.getElementById('imageTitle').value;
+
             const category = document.getElementById('category').value;
-            const file = document.getElementById('imageFile').files[0];
-    
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const galleryItem = {
-                        title: title,
-                        category: category,
-                        image: e.target.result,
-                        id: Date.now()
+            const files = Array.from(document.getElementById('imageFile').files);
+
+            if (files.length > 0) {
+                const galleryItems = JSON.parse(localStorage.getItem('galleryItems')) || [];
+
+                files.forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const galleryItem = {
+                            category: category,
+                            image: e.target.result,
+                            id: Date.now()
+                        };
+
+                        galleryItems.push(galleryItem);
+                        localStorage.setItem('galleryItems', JSON.stringify(galleryItems));
+
+                        // Update gallery list
+                        displayGallery();
                     };
-    
-                    // Get existing gallery items
-                    const galleryItems = JSON.parse(localStorage.getItem('galleryItems')) || [];
-                    galleryItems.push(galleryItem);
-                    localStorage.setItem('galleryItems', JSON.stringify(galleryItems));
-    
-                    // Reset form and refresh gallery
-                    document.getElementById('galleryForm').reset();
-                    imagePreviewContainer.innerHTML = '';
-                    loadGallery();
-                };
-                reader.readAsDataURL(file);
+                    reader.readAsDataURL(file);
+                });
+
+                // Reset form
+                document.getElementById('galleryForm').reset();
+                imagePreviewContainer.innerHTML = '';
+                selectedFiles = [];
             }
         });
-    
+
         // Function to load gallery items
-        function loadGallery() {
+        function displayGallery() {
             const galleryContainer = document.getElementById('galleryContainer');
             const galleryItems = JSON.parse(localStorage.getItem('galleryItems')) || [];
-            
+
             galleryContainer.innerHTML = '';
-            
-            galleryItems.forEach((item) => {
+
+            galleryItems.forEach((item, index) => {
                 const galleryItem = document.createElement('div');
                 galleryItem.className = 'gallery-item';
                 galleryItem.innerHTML = `
-                    <img src="${item.image}" alt="${item.title}">
+                    <div class="image-preview-item">
+                        <img src="${item.image}" alt="Gallery Image">
+                    </div>
                     <div class="item-details">
-                        <h3>${item.title}</h3>
-                        <p>Category: ${item.category}</p>
+                        <h3>Category: ${item.category}</h3>
                         <div class="actions">
-                            <button onclick="deleteGalleryItem(${item.id})" class="delete-btn">Delete</button>
+                            <button onclick="deleteGalleryItem(${index})" class="delete-btn">Delete</button>
                         </div>
                     </div>
                 `;
                 galleryContainer.appendChild(galleryItem);
             });
         }
-    
+
         // Function to delete gallery item
-        function deleteGalleryItem(id) {
+        function deleteGalleryItem(index) {
             if (confirm('Are you sure you want to delete this image?')) {
-                let galleryItems = JSON.parse(localStorage.getItem('galleryItems')) || [];
-                galleryItems = galleryItems.filter(item => item.id !== id);
+                const galleryItems = JSON.parse(localStorage.getItem('galleryItems')) || [];
+                galleryItems.splice(index, 1);
                 localStorage.setItem('galleryItems', JSON.stringify(galleryItems));
-                loadGallery();
+                displayGallery();
             }
         }
-    
+
         // Load gallery when page loads
-        document.addEventListener('DOMContentLoaded', loadGallery);
-    
-        // Keep existing toggleSideMenu function
+        document.addEventListener('DOMContentLoaded', displayGallery);
+
+        // Mobile menu toggle
         function toggleSideMenu() {
-            document.getElementById('sideMenu').classList.toggle('active');
+            const sideMenu = document.getElementById('sideMenu');
+            const overlay = document.querySelector('.menu-overlay');
+            sideMenu.classList.toggle('active');
+            if (overlay) {
+                overlay.classList.toggle('active');
+            }
         }
 
-        function toggleSideMenu() {
-    const sideMenu = document.getElementById('sideMenu');
-    const overlay = document.querySelector('.menu-overlay');
-    sideMenu.classList.toggle('active');
-    if (overlay) {
-        overlay.classList.toggle('active');
-    }
-}
-
-// Close menu when clicking outside
-document.addEventListener('click', function(e) {
-    const sideMenu = document.getElementById('sideMenu');
-    const hamburger = document.querySelector('.menu-toggle');
-    if (!sideMenu.contains(e.target) && !hamburger.contains(e.target) && sideMenu.classList.contains('active')) {
-        sideMenu.classList.remove('active');
-        document.querySelector('.menu-overlay').classList.remove('active');
-    }
-});
+        // Logout button functionality
+        document.addEventListener("DOMContentLoaded", function () {
+            const logoutButton = document.querySelector(".logout-btn");
+            if (logoutButton) {
+                logoutButton.addEventListener("click", function () {
+                    // Redirect to index.html
+                    window.location.href = "index.html";
+                });
+            }
+        });
     </script>
 </body>
 </html>
