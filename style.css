@@ -170,7 +170,7 @@ body {
   font-size: 5.5rem;
   font-weight: bold;
   color: black;
-  margin-bottom: 32px;
+  margin-bottom: 2px;
   line-height: 1;
 }
 
@@ -181,7 +181,7 @@ body {
 .hero-text p {
   font-size: 1rem;
   color: #4b5563;
-  margin-bottom: 40px;
+ 
   max-width: 600px;
   line-height: 1.5;
 }
@@ -1200,7 +1200,7 @@ body {
     min-height: 100vh;
     padding-top: 60px;
     padding-bottom: 30px;
-    height:135vh;
+    height:118vh;
   }
 
   .hero-content {
@@ -1245,6 +1245,8 @@ body {
     width: 350px; /* Increased size for yellow circle */
     height: 350px;
     right: 0;
+    left: -20px;
+    top: 3px;
   }
 
   .hero-image img {
