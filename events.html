@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - LexPix</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="container">
+            <div class="nav-container">
+                <div class="logo">
+                    <a href="index.html">
+                        <h2>LexPix<span>.</span></h2>
+                    </a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="events.html" class="active">Events</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <button class="login-button">Login</button>
+                    <button class="hamburger" aria-label="Menu">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Events Content -->
+    <section class="events-page">
+        <div class="container">
+            <h1>Our Events</h1>
+            <div class="events-grid">
+                <!-- Events will be dynamically loaded here -->
+                <!-- Sample Event Card -->
+                <div class="event-card">
+                    <div class="event-image">
+                        <img src="img/sample-event.jpg" alt="Event">
+                    </div>
+                    <div class="event-details">
+                        <h3>Event Name</h3>
+                        <p class="event-date">October 15, 2023</p>
+                        <p class="event-description">This is a sample event description that showcases what the event is about.</p>
+                        <a href="#" class="view-more">View Details →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <button class="close-menu">&times;</button>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <button class="login-button">Login</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h2>LexPix<span>.</span></h2>
+                <p>Capturing moments with minimalist elegance. Professional photography that focuses on what matters most.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="index.html#about">About</a>
+                    <a href="gallery.html">Gallery</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <div class="footer-contact">
+                    <a href="mailto:info@lexpix.com">info@lexpix.com</a>
+                    <a href="tel:+18254610429">+1 825 461 0429</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/lexarenpictures" target="_blank" rel="noopener noreferrer">
+                        <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.691-4.919-4.919-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162S8.597 18.163 12 18.163s6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zM12 16c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 LexPix. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

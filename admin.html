@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - LexPix</title>
+    <link rel="stylesheet" href="css/admin-styles.css">
+</head>
+<body>
+    <div class="menu-overlay"></div>
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <div class="mobile-logo">LexPix</div>
+        <button class="menu-toggle" onclick="toggleSideMenu()">☰</button>
+    </div>
+
+    <div class="admin-container">
+        <!-- Side Menu -->
+        <nav class="side-menu" id="sideMenu">
+            <div class="logo">
+                <h2>LexPix<span>.</span></h2>
+            </div>
+            <ul>
+                <li><a href="admin.html" class="active">Manage Reviews</a></li>
+                <li><a href="gallery-management.html">Manage Gallery</a></li>
+                <li><a href="events-management.html">Manage Events</a></li>
+            </ul>
+            <button class="logout-btn">Logout</button>
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            <h2>Reviews Management</h2>
+            <div class="form-container">
+                <form class="review-form">
+                    <div class="section-header">
+                        <h2>Manage Reviews</h2>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewerName">Reviewer Name</label>
+                        <input type="text" id="reviewerName" name="reviewerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rating">Rating</label>
+                        <select id="rating" name="rating" required>
+                            <option value="">Select Rating</option>
+                            <option value="5">5 Stars</option>
+                            <option value="4">4 Stars</option>
+                            <option value="3">3 Stars</option>
+                            <option value="2">2 Stars</option>
+                            <option value="1">1 Star</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewText">Review Text</label>
+                        <textarea id="reviewText" name="reviewText" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Add Review</button>
+                </form>
+            </div>
+            
+            <!-- Reviews List -->
+            <div class="reviews-list">
+                <h2>Current Reviews</h2>
+                <div id="reviewsContainer">
+                    <!-- Reviews will be loaded here dynamically -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Function to load reviews from localStorage
+        function loadReviews() {
+            const reviewsContainer = document.getElementById('reviewsContainer');
+            const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+            
+            reviewsContainer.innerHTML = '';
+            
+            reviews.forEach((review, index) => {
+                const reviewCard = document.createElement('div');
+                reviewCard.className = 'review-card';
+                reviewCard.innerHTML = `
+                    <h3>${review.name}</h3>
+                    <div class="rating">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div>
+                    <p>${review.text}</p>
+                    <div class="actions">
+                        <button onclick="deleteReview(${index})" class="delete-btn">Delete</button>
+                    </div>
+                `;
+                reviewsContainer.appendChild(reviewCard);
+            });
+        }
+    
+        // Function to delete a review
+        function deleteReview(index) {
+            if (confirm('Are you sure you want to delete this review?')) {
+                const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+                reviews.splice(index, 1);
+                localStorage.setItem('reviews', JSON.stringify(reviews));
+                loadReviews();
+            }
+        }
+    
+        // Load reviews when page loads
+        document.addEventListener('DOMContentLoaded', loadReviews);
+    
+        // Keep the existing toggleSideMenu function
+        function toggleSideMenu() {
+            document.getElementById('sideMenu').classList.toggle('active');
+        }
+
+        function toggleSideMenu() {
+    const sideMenu = document.getElementById('sideMenu');
+    const overlay = document.querySelector('.menu-overlay');
+    sideMenu.classList.toggle('active');
+    if (overlay) {
+        overlay.classList.toggle('active');
+    }
+}
+
+// Close menu when clicking outside
+document.addEventListener('click', function(e) {
+    const sideMenu = document.getElementById('sideMenu');
+    const hamburger = document.querySelector('.menu-toggle');
+    if (!sideMenu.contains(e.target) && !hamburger.contains(e.target) && sideMenu.classList.contains('active')) {
+        sideMenu.classList.remove('active');
+        document.querySelector('.menu-overlay').classList.remove('active');
+    }
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - LexPix</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="gallery.css">
+    <link rel="stylesheet" href="/css/mobile.css">
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="container">
+            <div class="nav-container">
+                <div class="logo">
+                    <a href="index.html">
+                        <h2>LexPix<span>.</span></h2>
+                    </a>
+                </div>
+            
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="index.html">About</a></li>
+                <li><a href="index.html">Projects</a></li>
+                <li><a href="index.html">Contact</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="events.html">Events</a></li>
+            </ul>
+    
+            <div class="nav-buttons">
+                <button class="login-button">Login</button>
+                <button class="hamburger" aria-label="Menu">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+
+    <section class="gallery-section">
+        <div class="container">
+            <h1>Our Gallery</h1>
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="events">Events</button>
+                <button class="filter-btn" data-filter="portraits">Portraits</button>
+                <button class="filter-btn" data-filter="places">Places</button>
+            </div>
+            <div class="gallery-grid">
+                <!-- Images will be loaded here dynamically -->
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <button class="close-menu">&times;</button>
+    <ul class="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="events.html">Events</a></li>
+    </ul>
+    <button class="login-button">Login</button>
+  </div>
+
+    <script src="gallery.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

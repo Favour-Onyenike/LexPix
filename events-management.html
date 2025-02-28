@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events Management - LexPix</title>
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        /* Admin Container */
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Side Menu */
+        .side-menu {
+            width: 250px;
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .side-menu .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .side-menu .logo h2 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .side-menu .logo span {
+            color: #3498db;
+        }
+
+        .side-menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .side-menu ul li {
+            margin: 15px 0;
+        }
+
+        .side-menu ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .side-menu ul li a:hover,
+        .side-menu ul li a.active {
+            background-color: #34495e;
+            color: #3498db;
+        }
+
+        .side-menu .logout-btn {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 30px; /* Increased right padding */
+            background-color: #2c3e50;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .mobile-nav {
+         display: none; /* Default state is hidden */
+        }
+        .mobile-nav .mobile-logo {
+            font-size: 20px;
+        }
+        .menu-toggle {
+            margin-right: 40px; /* Added margin to the right */
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        /* Mobile Side Menu Hidden */
+        @media (max-width: 768px) {
+            .side-menu {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                height: 100vh;
+                z-index: 1000;
+                width: 250px;
+                transition: all 0.3s ease;
+                visibility: hidden;
+            }
+
+            .side-menu.active {
+                left: 0;
+                visibility: visible; 
+                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2)
+            }
+
+            .mobile-nav {
+                display: flex;
+                width: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 999
+            }
+
+            main {
+                margin-left: 0;
+                padding: 10px;
+                width: 100%;
+                margin-top: 60px; /* Space for mobile nav */
+            }
+        }
+
+        /* Content */
+        main {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 95%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .submit-btn {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .events-list {
+            margin-top: 30px;
+        }
+
+        .event-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+
+        .actions button {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .actions button:hover {
+            background-color: #c0392b;
+        }
+
+        /* Image Preview */
+        .image-preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .image-preview-item {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            overflow: hidden;
+        }
+
+        .image-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-preview-item .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(255, 0, 0, 0.7);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .image-preview-item .delete-btn:hover {
+            background-color: rgba(255, 0, 0, 1);
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <div class="mobile-logo">LexPix</div>
+        <button class="menu-toggle" onclick="toggleSideMenu()">☰</button>
+    </div>
+
+    <div class="admin-container">
+        <!-- Side Menu -->
+        <nav class="side-menu" id="sideMenu">
+            <div class="logo">
+                <h2>LexPix</h2>
+            </div>
+            <ul>
+                <li><a href="admin.html">Manage Reviews</a></li>
+                <li><a href="gallery-management.html">Manage Gallery</a></li>
+                <li><a href="events-management.html" class="active">Manage Events</a></li>
+            </ul>
+            <button class="logout-btn">Logout</button>
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            <h2>Events Management</h2>
+
+            <!-- Add Event Form -->
+            <div class="form-container">
+                <form class="add-event-form" id="eventForm">
+                    <div class="section-header">
+                        <h2>Add New Event</h2>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventName">Event Name</label>
+                        <input type="text" id="eventName" name="eventName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDate">Event Date</label>
+                        <input type="date" id="eventDate" name="eventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDescription">Description</label>
+                        <textarea id="eventDescription" name="eventDescription" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventImages">Event Images</label>
+                        <input type="file" id="eventImages" name="eventImages" accept="image/*" multiple required>
+                        <div class="image-preview-container" id="imagePreview"></div>
+                    </div>
+                    <button type="submit" class="submit-btn">Add Event</button>
+                </form>
+            </div>
+
+            <!-- Events List -->
+            <div class="events-list">
+                <h2>Events List</h2>
+                <div class="event-card">
+                    <h3>Event Name</h3>
+                    <p>Event Date: 2023-10-15</p>
+                    <p>Description: This is a sample event description.</p>
+                    <div class="actions">
+                        <button>Edit</button>
+                        <button class="delete-btn">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // JavaScript for Image Preview and Delete Functionality
+        const imageFileInput = document.getElementById('eventImages');
+        const imagePreviewContainer = document.getElementById('imagePreview');
+        let selectedFiles = [];
+
+        imageFileInput.addEventListener('change', function (e) {
+            const files = e.target.files;
+            imagePreviewContainer.innerHTML = ''; // Clear previous previews
+
+            for (const file of files) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'image-preview-item';
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'delete-btn';
+                    deleteBtn.innerHTML = '×';
+                    deleteBtn.onclick = function () {
+                        selectedFiles = selectedFiles.filter(f => f !== file);
+                        previewItem.remove();
+
+                        if (selectedFiles.length === 0) {
+                            imageFileInput.value = '';
+                        }
+                    };
+
+                    previewItem.appendChild(img);
+                    previewItem.appendChild(deleteBtn);
+                    imagePreviewContainer.appendChild(previewItem);
+
+                    selectedFiles.push(file);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // JavaScript for Mobile Side Menu Toggle
+        function toggleSideMenu() {
+            const sideMenu = document.getElementById('sideMenu');
+            sideMenu.classList.toggle('active');
+        }
+
+        function toggleSideMenu() {
+    const sideMenu = document.getElementById('sideMenu');
+    const overlay = document.querySelector('.menu-overlay');
+    sideMenu.classList.toggle('active');
+    if (overlay) {
+        overlay.classList.toggle('active');
+    }
+}
+
+// Close menu when clicking outside
+document.addEventListener('click', function(e) {
+    const sideMenu = document.getElementById('sideMenu');
+    const hamburger = document.querySelector('.menu-toggle');
+    if (!sideMenu.contains(e.target) && !hamburger.contains(e.target) && sideMenu.classList.contains('active')) {
+        sideMenu.classList.remove('active');
+        document.querySelector('.menu-overlay').classList.remove('active');
+    }
+});
+    </script>
+
+</body>
+</html>
