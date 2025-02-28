@@ -339,101 +339,61 @@
         </main>
     </div>
 
-    <script>
-        // JavaScript for Image Preview and Delete Functionality
-        const imageFileInput = document.getElementById('eventImages');
-        const imagePreviewContainer = document.getElementById('imagePreview');
-        let selectedFiles = [];
-
-        imageFileInput.addEventListener('change', function (e) {
-            const files = e.target.files;
-            imagePreviewContainer.innerHTML = ''; // Clear previous previews
-
-            for (const file of files) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const previewItem = document.createElement('div');
-                    previewItem.className = 'image-preview-item';
-
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.className = 'delete-btn';
-                    deleteBtn.innerHTML = '×';
-                    deleteBtn.onclick = function () {
-                        selectedFiles = selectedFiles.filter(f => f !== file);
-                        previewItem.remove();
-
-                        if (selectedFiles.length === 0) {
-                            imageFileInput.value = '';
-                        }
-                    };
-
-                    previewItem.appendChild(img);
-                    previewItem.appendChild(deleteBtn);
-                    imagePreviewContainer.appendChild(previewItem);
-
-                    selectedFiles.push(file);
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // JavaScript for Mobile Side Menu Toggle
-        function toggleSideMenu() {
-            const sideMenu = document.getElementById('sideMenu');
-            sideMenu.classList.toggle('active');
-        }
-
-        function toggleSideMenu() {
-    const sideMenu = document.getElementById('sideMenu');
-    const overlay = document.querySelector('.menu-overlay');
-    sideMenu.classList.toggle('active');
-    if (overlay) {
-        overlay.classList.toggle('active');
-    }
-}
-
-// Close menu when clicking outside
-document.addEventListener('click', function(e) {
-    const sideMenu = document.getElementById('sideMenu');
-    const hamburger = document.querySelector('.menu-toggle');
-    if (!sideMenu.contains(e.target) && !hamburger.contains(e.target) && sideMenu.classList.contains('active')) {
-        sideMenu.classList.remove('active');
-        document.querySelector('.menu-overlay').classList.remove('active');
-    }
-});
-    </script>
-
-    // Add this after your existing script tag
-<script>
-    <!-- Add this to your form -->
-    <div class="form-group">
-        <label for="eventDescription">Description</label>
-        <textarea id="eventDescription" name="eventDescription" rows="4" required></textarea>
-    </div>
-    
-    <!-- Modify the image handling script -->
+    <!-- Keep only one script tag at the bottom of the body -->
     <script>
         // Preview image handling
         const previewInput = document.getElementById('eventPreview');
         const previewContainer = document.getElementById('previewContainer');
+        const imageFileInput = document.getElementById('eventImages');
+        const imagePreviewContainer = document.getElementById('imagePreview');
+        let selectedFiles = [];
         let previewFile = null;
     
+        // Preview image event listener
         previewInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    previewContainer.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                    previewContainer.innerHTML = `<img src="${e.target.result}" alt="Preview" style="max-width: 100%; height: auto;">`;
                     previewFile = e.target.result;
                 };
                 reader.readAsDataURL(file);
             }
         });
     
-        // Modify the form submission
+        // Event images preview
+        imageFileInput.addEventListener('change', function(e) {
+            const files = e.target.files;
+            imagePreviewContainer.innerHTML = '';
+            selectedFiles = []; // Reset selected files
+    
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'image-preview-item';
+    
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'delete-btn';
+                    deleteBtn.innerHTML = '×';
+                    deleteBtn.onclick = function() {
+                        selectedFiles = selectedFiles.filter(f => f !== imageUrl);
+                        previewItem.remove();
+                    };
+    
+                    previewItem.appendChild(img);
+                    previewItem.appendChild(deleteBtn);
+                    imagePreviewContainer.appendChild(previewItem);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+    
+        // Form submission
         document.getElementById('eventForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -442,7 +402,7 @@ document.addEventListener('click', function(e) {
                 date: document.getElementById('eventDate').value,
                 description: document.getElementById('eventDescription').value,
                 preview: previewFile,
-                images: selectedFiles.map(file => file), // Store image data URLs
+                images: selectedFiles,
                 id: 'event-' + Date.now()
             };
     
@@ -459,41 +419,7 @@ document.addEventListener('click', function(e) {
             previewFile = null;
         });
     
-        // Update the image preview functionality
-        imageFileInput.addEventListener('change', function(e) {
-            const files = e.target.files;
-            imagePreviewContainer.innerHTML = '';
-    
-            for (const file of files) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const previewItem = document.createElement('div');
-                    previewItem.className = 'image-preview-item';
-    
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-    
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.className = 'delete-btn';
-                    deleteBtn.innerHTML = '×';
-                    
-                    const imageUrl = e.target.result;
-                    selectedFiles.push(imageUrl);
-    
-                    deleteBtn.onclick = function() {
-                        selectedFiles = selectedFiles.filter(f => f !== imageUrl);
-                        previewItem.remove();
-                    };
-    
-                    previewItem.appendChild(img);
-                    previewItem.appendChild(deleteBtn);
-                    imagePreviewContainer.appendChild(previewItem);
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    
-        // Update the displayEvents function
+        // Display events
         function displayEvents() {
             const eventsList = document.querySelector('.events-list');
             const events = JSON.parse(localStorage.getItem('events') || '[]');
@@ -524,12 +450,22 @@ document.addEventListener('click', function(e) {
             });
             eventsList.innerHTML = eventsHTML;
         }
-    </script>
+    
     function deleteEvent(eventId) {
         let events = JSON.parse(localStorage.getItem('events') || '[]');
         events = events.filter(event => event.id !== eventId);
         localStorage.setItem('events', JSON.stringify(events));
         displayEvents();
+    }
+
+    // Mobile menu toggle
+    function toggleSideMenu() {
+        const sideMenu = document.getElementById('sideMenu');
+        const overlay = document.querySelector('.menu-overlay');
+        sideMenu.classList.toggle('active');
+        if (overlay) {
+            overlay.classList.toggle('active');
+        }
     }
     // Initial display
     displayEvents();
