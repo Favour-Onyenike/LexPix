@@ -5,6 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Events - LexPix</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .event-image img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .event-details {
+            padding: 20px;
+        }
+
+        .event-date {
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .event-description {
+            margin-bottom: 20px;
+            color: #4a5568;
+        }
+
+        .explore-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #fbbf24;
+            color: black;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .explore-btn:hover {
+            background-color: #f59e0b;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -39,21 +89,42 @@
     <section class="events-page">
         <div class="container">
             <h1>Our Events</h1>
-            <div class="events-grid">
+            <!-- Replace the events-grid div content with: -->
+            <div class="events-grid" id="eventsGrid">
                 <!-- Events will be dynamically loaded here -->
-                <!-- Sample Event Card -->
-                <div class="event-card">
-                    <div class="event-image">
-                        <img src="img/sample-event.jpg" alt="Event">
-                    </div>
-                    <div class="event-details">
-                        <h3>Event Name</h3>
-                        <p class="event-date">October 15, 2023</p>
-                        <p class="event-description">This is a sample event description that showcases what the event is about.</p>
-                        <a href="#" class="view-more">View Details →</a>
-                    </div>
-                </div>
             </div>
+            <!-- Add before closing body tag -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const eventsGrid = document.getElementById('eventsGrid');
+                    const events = JSON.parse(localStorage.getItem('events') || '[]');
+
+                    if (events.length === 0) {
+                        eventsGrid.innerHTML = '<p>No events available at the moment.</p>';
+                        return;
+                    }
+
+                    events.forEach(event => {
+                        const thumbnail = event.images && event.images.length > 0 ? event.images[0] : 'img/default-event.jpg';
+                        
+                        const eventCard = `
+                            <div class="event-card">
+                                <div class="event-image">
+                                    <img src="${thumbnail}" alt="${event.name}">
+                                </div>
+                                <div class="event-details">
+                                    <h3>${event.name}</h3>
+                                    <p class="event-date">${event.date}</p>
+                                    <p class="event-description">${event.description}</p>
+                                    <a href="event-gallery.html?id=${event.id}" class="explore-btn">Explore Event →</a>
+                                </div>
+                            </div>
+                        `;
+                        eventsGrid.innerHTML += eventCard;
+                    });
+                });
+            </script>
+            
         </div>
     </section>
 
@@ -98,7 +169,7 @@
                 <div class="footer-social">
                     <a href="https://www.instagram.com/lexarenpictures" target="_blank" rel="noopener noreferrer">
                         <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.691-4.919-4.919-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162S8.597 18.163 12 18.163s6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zM12 16c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.26-.149-4.771-1.691-4.919-4.919-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162S8.597 18.163 12 18.163s6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zM12 16c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                         </svg>
                     </a>
                 </div>

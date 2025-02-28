@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Gallery - LexPix</title>
+    <link rel="stylesheet" href="css/admin-styles.css">
+    <style>
+        .event-gallery {
+            padding: 20px;
+        }
+        .event-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .gallery-item {
+            position: relative;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .download-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .download-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+    </style>
+</head>
+<body>
+    <div class="event-gallery">
+        <div class="event-header">
+            <h1 id="eventTitle">Event Gallery</h1>
+            <p id="eventDate"></p>
+            <p id="eventDescription"></p>
+        </div>
+        <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const eventId = urlParams.get('id');
+            
+            const events = JSON.parse(localStorage.getItem('events') || '[]');
+            const event = events.find(e => e.id === eventId);
+            
+            if (event) {
+                document.getElementById('eventTitle').textContent = event.name;
+                document.getElementById('eventDate').textContent = `Date: ${event.date}`;
+                document.getElementById('eventDescription').textContent = event.description;
+                
+                const galleryGrid = document.getElementById('galleryGrid');
+                event.images.forEach((image, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'gallery-item';
+                    
+                    const img = document.createElement('img');
+                    img.src = image;
+                    
+                    const downloadBtn = document.createElement('button');
+                    downloadBtn.className = 'download-btn';
+                    downloadBtn.textContent = 'Download';
+                    downloadBtn.onclick = () => downloadImage(image, `${event.name}-image-${index + 1}`);
+                    
+                    div.appendChild(img);
+                    div.appendChild(downloadBtn);
+                    galleryGrid.appendChild(div);
+                });
+            }
+        });
+
+        function downloadImage(dataUrl, fileName) {
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>

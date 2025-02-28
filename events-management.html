@@ -304,6 +304,12 @@
                         <label for="eventDate">Event Date</label>
                         <input type="date" id="eventDate" name="eventDate" required>
                     </div>
+                    <!-- Add this after the event description field and before the event images field -->
+                    <div class="form-group">
+                        <label for="eventPreview">Event Preview Image</label>
+                        <input type="file" id="eventPreview" name="eventPreview" accept="image/*" required>
+                        <div class="preview-container" id="previewContainer"></div>
+                    </div>
                     <div class="form-group">
                         <label for="eventDescription">Description</label>
                         <textarea id="eventDescription" name="eventDescription" rows="4" required></textarea>
@@ -399,6 +405,135 @@ document.addEventListener('click', function(e) {
     }
 });
     </script>
+
+    // Add this after your existing script tag
+<script>
+    <!-- Add this to your form -->
+    <div class="form-group">
+        <label for="eventDescription">Description</label>
+        <textarea id="eventDescription" name="eventDescription" rows="4" required></textarea>
+    </div>
+    
+    <!-- Modify the image handling script -->
+    <script>
+        // Preview image handling
+        const previewInput = document.getElementById('eventPreview');
+        const previewContainer = document.getElementById('previewContainer');
+        let previewFile = null;
+    
+        previewInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewContainer.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                    previewFile = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    
+        // Modify the form submission
+        document.getElementById('eventForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const eventData = {
+                name: document.getElementById('eventName').value,
+                date: document.getElementById('eventDate').value,
+                description: document.getElementById('eventDescription').value,
+                preview: previewFile,
+                images: selectedFiles.map(file => file), // Store image data URLs
+                id: 'event-' + Date.now()
+            };
+    
+            let events = JSON.parse(localStorage.getItem('events') || '[]');
+            events.push(eventData);
+            localStorage.setItem('events', JSON.stringify(events));
+    
+            // Update events list
+            displayEvents();
+            this.reset();
+            previewContainer.innerHTML = '';
+            imagePreviewContainer.innerHTML = '';
+            selectedFiles = [];
+            previewFile = null;
+        });
+    
+        // Update the image preview functionality
+        imageFileInput.addEventListener('change', function(e) {
+            const files = e.target.files;
+            imagePreviewContainer.innerHTML = '';
+    
+            for (const file of files) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'image-preview-item';
+    
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'delete-btn';
+                    deleteBtn.innerHTML = '×';
+                    
+                    const imageUrl = e.target.result;
+                    selectedFiles.push(imageUrl);
+    
+                    deleteBtn.onclick = function() {
+                        selectedFiles = selectedFiles.filter(f => f !== imageUrl);
+                        previewItem.remove();
+                    };
+    
+                    previewItem.appendChild(img);
+                    previewItem.appendChild(deleteBtn);
+                    imagePreviewContainer.appendChild(previewItem);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    
+        // Update the displayEvents function
+        function displayEvents() {
+            const eventsList = document.querySelector('.events-list');
+            const events = JSON.parse(localStorage.getItem('events') || '[]');
+            
+            let eventsHTML = '<h2>Events List</h2>';
+            events.forEach(event => {
+                eventsHTML += `
+                    <div class="event-card">
+                        <div class="event-preview">
+                            <img src="${event.preview}" alt="${event.name}" style="max-width: 200px; height: auto;">
+                        </div>
+                        <h3>${event.name}</h3>
+                        <p>Event Date: ${event.date}</p>
+                        <p>Description: ${event.description}</p>
+                        <div class="image-preview-container">
+                            ${event.images.map((img, index) => `
+                                <div class="image-preview-item">
+                                    <img src="${img}" alt="Event image ${index + 1}">
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="actions">
+                            <button onclick="window.location.href='event-gallery.html?id=${event.id}'">Explore Event</button>
+                            <button class="delete-btn" onclick="deleteEvent('${event.id}')">Delete</button>
+                        </div>
+                    </div>
+                `;
+            });
+            eventsList.innerHTML = eventsHTML;
+        }
+    </script>
+    function deleteEvent(eventId) {
+        let events = JSON.parse(localStorage.getItem('events') || '[]');
+        events = events.filter(event => event.id !== eventId);
+        localStorage.setItem('events', JSON.stringify(events));
+        displayEvents();
+    }
+    // Initial display
+    displayEvents();
+</script>
 
 </body>
 </html>
