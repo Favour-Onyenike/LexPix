@@ -1552,9 +1552,9 @@ body {
   }
 
   .hero-image img {
-    width: 100%;
-    max-width: 350px; /* Increased size for hero image */
-    height: auto;
+    /*width: 100%;*/
+    max-width: 390px;  
+    height: max-content;
     margin-right: 0;
     -webkit-transform: translateX(0);
     -moz-transform: translateX(0);
