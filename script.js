@@ -51,18 +51,26 @@ document.getElementById("loginBtn")?.addEventListener("click", function () {
     }
   }
   
-  // Toggle About section content
   function toggleAboutContent() {
+    console.log("toggleAboutContent called!");
+  
     const extendedContent = document.getElementById("about-content-extended");
     const aboutButton = document.querySelector(".about-button");
   
+    console.log(extendedContent); // Should log the extended content element
+    console.log(aboutButton); // Should log the button element
+  
     if (extendedContent?.classList.contains("hidden")) {
+      console.log("Removing 'hidden' class");
       extendedContent.classList.remove("hidden");
       aboutButton.textContent = "Read Less ←";
     } else {
+      console.log("Adding 'hidden' class");
       extendedContent?.classList.add("hidden");
       aboutButton.textContent = "Read More →";
     }
+  
+    console.log("Extended content classList:", extendedContent?.classList);
   }
   
   // Review functions

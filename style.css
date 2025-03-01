@@ -350,6 +350,7 @@ body {
   color: #9ca3af;
   font-size: 1.125rem;
   margin-bottom: 32px;
+  text-align: left;
 }
 
 .adobe-icons {
@@ -439,7 +440,7 @@ body {
 }
 
 .hidden {
-  display: none;
+  display: none !important; /* Force the class to work */
 }
 
 /* ==================== */
@@ -1088,6 +1089,7 @@ body {
 .footer-column h2 {
   font-size: 2rem;
   margin-bottom: 20px;
+  color:white;
 }
 
 .footer-column h2 span {
