@@ -1483,7 +1483,7 @@ body {
     -ms-flex-direction: column;
     flex-direction: column; /* Stack text and image vertically */
     text-align: left; /* Left-align text */
-    gap: 2rem;
+    gap: 0rem;
   }
 
   .hero-text {
@@ -1518,7 +1518,7 @@ body {
     -webkit-box-ordinal-group: 3;
     -ms-flex-order: 2;
     order: 2; /* Ensure image comes after text */
-    margin-top: 20px;
+    margin-top: 0px;
     width: 100%; /* Full width for image */
     display: -webkit-box;
     display: -ms-flexbox;
