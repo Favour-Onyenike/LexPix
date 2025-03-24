@@ -66,3 +66,9 @@ const App = () => (
 );
 
 export default App;
+import { BrowserRouter } from 'react-router-dom'
+
+// Change BrowserRouter to:
+<BrowserRouter basename={import.meta.env.BASE_URL}>
+  {/* Your routes here */}
+</BrowserRouter>
