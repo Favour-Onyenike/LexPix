@@ -1,0 +1,141 @@
+
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { toast } from 'sonner';
+import { signIn, signOut, isAuthenticated, getCurrentUser } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
+
+type AuthContextType = {
+  isAuthenticated: boolean;
+  login: (email: string, password: string) => Promise<boolean>;
+  logout: () => void;
+  isLoading: boolean;
+  generateInviteLink: () => Promise<string | null>;
+};
+
+const AuthContext = createContext<AuthContextType | null>(null);
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
+
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check authentication status on initial load and on path change
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        setIsLoading(true);
+        const isUserAuthenticated = await isAuthenticated();
+        setIsAuth(isUserAuthenticated);
+        
+        // If route changed away from admin, invalidate auth state
+        const isAdminRoute = location.pathname.startsWith('/admin');
+        if (!isAdminRoute && isUserAuthenticated) {
+          // Force recheck authentication when leaving admin area
+          console.log('Left admin area, logging out');
+          await signOut();
+          setIsAuth(false);
+        }
+      } catch (error) {
+        console.error('Error checking authentication:', error);
+        setIsAuth(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, [location.pathname]);
+
+  // Redirect logic for protected routes
+  useEffect(() => {
+    if (!isLoading) {
+      const isAdminRoute = location.pathname.startsWith('/admin');
+      
+      if (isAdminRoute && !isAuth && location.pathname !== '/login') {
+        navigate('/login', { replace: true });
+      }
+    }
+  }, [location.pathname, isAuth, navigate, isLoading]);
+
+  const login = async (email: string, password: string): Promise<boolean> => {
+    try {
+      setIsLoading(true);
+      const { error } = await signIn(email, password);
+      
+      if (error) {
+        toast.error(error.message || 'Invalid credentials');
+        return false;
+      }
+      
+      setIsAuth(true);
+      toast.success('Logged in successfully');
+      return true;
+    } catch (error) {
+      console.error('Login error:', error);
+      toast.error('An error occurred during login');
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await signOut();
+      setIsAuth(false);
+      navigate('/login');
+      toast.info('Logged out');
+    } catch (error) {
+      console.error('Logout error:', error);
+      toast.error('Error logging out');
+    }
+  };
+
+  const generateInviteLink = async (): Promise<string | null> => {
+    try {
+      // Generate a unique token
+      const token = crypto.randomUUID();
+      const expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + 7); // Expires in 7 days
+      
+      const currentUser = await getCurrentUser();
+      
+      // Store the token using the RPC function
+      const { error } = await supabase.rpc('insert_invite_token', {
+        p_token: token,
+        p_expires_at: expiresAt.toISOString(),
+        p_created_by: currentUser?.id || null
+      } as any); // Use type assertion to bypass the type checking
+        
+      if (error) {
+        console.error('Error creating invite token:', error);
+        toast.error('Could not generate invite link');
+        return null;
+      }
+      
+      // Return the invite link
+      const baseUrl = window.location.origin;
+      return `${baseUrl}/invite/${token}`;
+    } catch (error) {
+      console.error('Error generating invite link:', error);
+      toast.error('Could not generate invite link');
+      return null;
+    }
+  };
+
+  return (
+    <AuthContext.Provider value={{ isAuthenticated: isAuth, login, logout, isLoading, generateInviteLink }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
